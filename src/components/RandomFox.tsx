@@ -1,6 +1,3 @@
-/* Generate a random function between 1 and 123 */
-const random = () => Math.floor(Math.random() * 123) + 1;
-
 /* En este archivo mostramos 4 formas (hay más) de crear
 un componetne de React en TypeScrip */
 /* #1 Tipado implícito
@@ -8,11 +5,12 @@ export const RandomFox = () => {
   return <img />
 } */
 
-/* #2 Tipar el retorno de la función */
-export const RandomFox = (): JSX.Element => {
-  const image: string = `https://randomfox.ca/images/${random()}.jpg`;
+type Props = { image: string };
 
+/* #2 Tipar el retorno de la función */
+export const RandomFox = ({ image }: Props): JSX.Element => {
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className="rounded"
       src={image}
