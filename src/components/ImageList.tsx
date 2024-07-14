@@ -2,7 +2,7 @@
 import { useState } from "react";
 import type { MouseEventHandler } from "react";
 
-import { RandomFox } from "@/components/RandomFox";
+import { LazyImage } from "@/components/LazyImage";
 
 /* Generate a random function between 1 and 123 */
 const random = () => Math.floor(Math.random() * 123) + 1;
@@ -30,7 +30,14 @@ export const ImageList = (): JSX.Element => {
       <button onClick={addNewFox}>Add new fox</button>
       {images.map(({ id, url }) => (
         <div key={id} className="p-4">
-          <RandomFox image={url} />
+          <LazyImage
+            src={url}
+            className="rounded bg-gray-300"
+            width="320"
+            height="auto"
+            alt="Random Fox"
+            title="Random Fox"
+          />
         </div>
       ))}
     </>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import type { ImgHTMLAttributes } from "react";
+
 /* En este archivo mostramos 4 formas (hay más) de crear
 un componetne de React en TypeScrip */
 /* #1 Tipado implícito
@@ -7,17 +9,21 @@ export const RandomFox = () => {
   return <img />
 } */
 
-type Props = { image: string };
+type LazyImageProps = { src: string };
+
+type ImageNativeTypes = ImgHTMLAttributes<HTMLImageElement>;
+
+type Props = LazyImageProps & ImageNativeTypes;
 
 /* #2 Tipar el retorno de la función */
-export const RandomFox = ({ image }: Props): JSX.Element => {
+export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
   /* Debemos tipar useRef utilizando el genérico e indicarle
   cuál es el tipo de elemento en el dom que vamos a usar con useRef: */
   const node = useRef<HTMLImageElement>(null);
   /* El valor inicial del useState es una imagen transparente
   de 320 de alto por 320 de ancho en base 64 que es un formato
   muy comprimido para evitar hacer una petición http para obtener la imagen*/
-  const [src, setSrc] = useState(
+  const [currentSrc, setCurrentSrc] = useState(
     "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
   );
 
@@ -28,7 +34,7 @@ export const RandomFox = ({ image }: Props): JSX.Element => {
         if (entry.isIntersecting) {
           /* Elemento está dentro de la pantalla, así que
           ahora sí cargamos la imagen en el navegador: */
-          setSrc(image);
+          setCurrentSrc(src);
         }
       });
     });
@@ -42,18 +48,11 @@ export const RandomFox = ({ image }: Props): JSX.Element => {
       /* Desconectar observador */
       observer.disconnect();
     };
-  }, [image]);
+  }, [src]);
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className="rounded bg-gray-300"
-      src={src}
-      ref={node}
-      alt="Image for a Fox"
-      width="320"
-      height="auto"
-    />
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    <img src={currentSrc} ref={node} {...imgProps} />
   );
 };
 
