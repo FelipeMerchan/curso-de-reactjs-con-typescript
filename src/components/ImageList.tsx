@@ -10,15 +10,13 @@ const random = () => Math.floor(Math.random() * 123) + 1;
 /* Generate simple unique id */
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
-type ImageItem = { id: string; url: string };
-
 export const ImageList = (): JSX.Element => {
-  const [images, setImages] = useState<Array<ImageItem>>([]);
+  const [images, setImages] = useState<Array<IImageItem>>([]);
 
   const addNewFox: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
 
-    const newImageItem: ImageItem = {
+    const newImageItem: IImageItem = {
       id: generateId(),
       url: `https://randomfox.ca/images/${random()}.jpg`,
     };
