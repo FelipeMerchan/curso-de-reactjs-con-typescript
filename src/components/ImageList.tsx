@@ -21,6 +21,7 @@ export const ImageList = (): JSX.Element => {
       url: `https://randomfox.ca/images/${random()}.jpg`,
     };
     setImages([...images, newImageItem]);
+    /* window.plausible("add_fox"); */
   };
 
   return (
