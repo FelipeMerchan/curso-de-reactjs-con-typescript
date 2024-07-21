@@ -1,4 +1,8 @@
+import { random } from "lodash";
+
 import { ImageList } from "@/components/ImageList";
+
+const randomNumber = () => random(1, 123);
 
 export default function Home() {
   return (
