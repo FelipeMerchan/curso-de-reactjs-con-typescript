@@ -16,13 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      {/* <head>
         <script
           defer
           data-domain="yourdomain.com"
           src="https://plausible.io/js/script.js"
         ></script>
-      </head>
+      </head> */}
       <body className={inter.className}>{children}</body>
     </html>
   );
